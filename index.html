@@ -1,0 +1,1363 @@
+﻿<html>
+<head>
+
+	<script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+	<!-- Start WOWSlider.com HEAD section -->
+	<link rel="stylesheet" type="text/css" href="engine1/style.css" />
+	<script type="text/javascript" src="engine1/jquery.js"></script>
+	<!-- End WOWSlider.com HEAD section -->
+
+	
+
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+	<link rel="stylesheet" type="text/css" href="css/w3.css" />
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">   
+	<link rel="stylesheet" type="text/css" href="css/index.css" />    
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+	<script type="text/javascript" src="js/SocialSharing.js"></script>
+    <title>Hello World</title>
+	
+<script>
+			function ajaxco(url,output) {
+				if (url.length == 0) { 
+					document.getElementById(output).innerHTML = "در حال دریافت اطلاعات";
+					return;
+				} else {
+					var xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange = function() {
+						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+							document.getElementById(output).innerHTML = xmlhttp.responseText;
+						}
+					};
+					xmlhttp.open("GET", url, true);
+					xmlhttp.send();
+				}
+			}
+			ajaxco("http://avayemashaghel.ir/dasteha.php","list_dasteha");
+			ajaxco("http://avayemashaghel.ir/slids.php","slidplace");
+			
+			function set_daste(daste)
+			{
+			localStorage.daste=daste;
+			location.replace("#shogl");
+			ajaxco("http://avayemashaghel.ir/list_job.php?s="+daste,"list_job");
+			}
+			function loadfave()
+			{
+				ajaxco("http://avayemashaghel.ir/list_job.php?fave="+localStorage.lov,"favelist");
+			}
+			loadfave();
+			function addlov()
+			{
+				if(localStorage.lov.indexOf("+"+localStorage.job+"+")==-1)
+				{
+					if(localStorage.lov!="")
+					{
+						localStorage.lov=localStorage.lov+",+"+localStorage.job+"+";
+					}
+					else
+					{
+						localStorage.lov="+"+localStorage.job+"+";
+					}
+					alert("شغل مورد نظر به فهرست علاقه مندی های شما اضافه شد");
+					document.getElementById("lovee").style.color="red";
+				}
+				else
+				{
+					alert("شغل مورد نظر از فهرست مورد علاقه های شما حذف شد");
+					localStorage.lov=localStorage.lov.replace(",+"+localStorage.job+"+","");
+					localStorage.lov=localStorage.lov.replace("+"+localStorage.job+"+","");
+					localStorage.lov=localStorage.lov.replace(",,",",");
+					document.getElementById("lovee").style.color="white";
+					
+				}
+				localStorage.lov=localStorage.lov.replace(undefined+",","")
+				localStorage.lov=localStorage.lov.replace(",,",",")
+				if(localStorage.lov==",")
+				{
+					localStorage.lov="";
+				}
+				//alert(localStorage.lov);
+				loadfave();
+			}
+			function show_job(id)
+			{
+			localStorage.job=id;
+			location.replace("#mor-shogl");
+			ajaxco("http://avayemashaghel.ir/jobinfo.php?id="+id,"jobinfo")
+			}
+			ajaxco("http://avayemashaghel.ir/seamap.php","seamap");
+			function filtermap(paramfilter)
+			{
+			document.getElementById("mapsea").src="http://avayemashaghel.ir/map.php?s="+paramfilter;
+			}
+			//ajaxco("http://avayemashaghel.ir/daste_job_search.php","daste_job_search");
+			
+			function searchper()
+			{
+				modir=document.getElementById("modir").value;
+				khadamat=document.getElementById("khadamat").value;
+				tel=document.getElementById("tel").value;
+				adres=document.getElementById("adres").value;
+				onvan=document.getElementById("onvan").value;
+				urlsearch="http://avayemashaghel.ir/list_job.php?fi=1";
+				if(onvan!="") urlsearch=urlsearch+"&onvan="+onvan;
+				if(adres!="") urlsearch=urlsearch+"&adres="+adres;
+				if(tel!="") urlsearch=urlsearch+"&tel="+tel;
+				if(khadamat!="") urlsearch=urlsearch+"&khadamat="+khadamat;
+				if(modir!="") urlsearch=urlsearch+"&modir="+modir;
+				//$urlsearch="http://avayemashaghel.ir/list_job.php?fi=1&onvan="+onvan+"modir="+modir+"&khadamat="+khadamat+"&tel="+tel+"&adres="+adres;
+				ajaxco(urlsearch,"list_job");
+				location.replace("#shogl");
+			}
+			function fjobsfunction(allsea)
+			{
+				urlsearch="http://avayemashaghel.ir/list_job.php?all="+allsea;
+				ajaxco(urlsearch,"list_job");
+				location.replace("#shogl");
+			}
+			
+			function takhfif()
+			{
+				ajaxco("http://avayemashaghel.ir/takhfif.php?t=1","takhfifaghsat");
+				location.replace("#list-takhf");
+			}
+			function aghsat()
+			{
+				ajaxco("http://avayemashaghel.ir/takhfif.php?a=1","takhfifaghsat");
+				location.replace("#list-takhf");
+			}
+			function findpersent(fi)
+			{
+				ajaxco("http://avayemashaghel.ir/takhfif.php?fi="+fi,"takhfifaghsat");
+				location.replace("#list-takhf");
+			}
+			
+			function singleniaz(id){
+			ajaxco("http://avayemashaghel.ir/singlepost.php?id="+id,"singleniaz");
+			location.replace("#mor-niaz");
+			}
+			
+			function niazmandi()
+			{
+				ajaxco("http://avayemashaghel.ir/niaz.php?nd=1","niazha")
+			}
+			function niazmandam()
+			{
+				ajaxco("http://avayemashaghel.ir/niaz.php?nm=1","niazha")
+			}
+			function findniaz(fi)
+			{
+				ajaxco("http://avayemashaghel.ir/niaz.php?fi="+fi,"niazha")
+			}
+			ajaxco("http://avayemashaghel.ir/newlist.php?m=1","msgpl");
+			function loadmsg()
+			{
+				//ajaxco("http://avayemashaghel.ir/newlist.php?m=1","msgpl");
+				location.replace("#masage");
+			}
+			ajaxco("http://avayemashaghel.ir/newlist.php","newlist");
+			function loadnews()
+			{
+				//ajaxco("http://avayemashaghel.ir/newlist.php","newlist");
+				location.replace("#news");
+			}
+			function addjob()
+			{
+				onvanreg=document.getElementById("onvanreg").value;
+				tel1reg=document.getElementById("tel1reg").value;
+				adresreg=document.getElementById("adresreg").value;
+				document.getElementById("sendsmsjob").href="sms:5000500031129?body="+onvanreg+"-"+tel1reg+"-"+adresreg;
+				alert(document.getElementById("sendsmsjob").href);
+				document.getElementById("btnsms").style.display="block";
+				ajaxco("http://avayemashaghel.ir/addjob.php?onvan="+onvanreg+"&tel1="+tel1reg+"&adres="+adresreg,"resregjob");
+			}
+			</script>
+	
+	
+</head>
+<body>
+	<div  data-role="page" id="first" > 
+		<div data-role="content"  class="ui-content" style="text-align:center;">
+			<div style="padding-top:20%;">
+				<img src="images\icon-loading.png" />
+				<p style="margin-top:30%;"><a href="#main"  class="ui-btn ui-btn-b" style="width:50%;right:-25%;" >ورود به نرم افزار</a></p>
+			</div>	
+		</div> 
+	</div> 	
+	<div style="background-color:#f2f2f2;" data-role="page" id="main"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel1" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway"   style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel1" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="main" >	
+		<div id="slidplace">
+			<!-- Start WOWSlider.com BODY section -->
+			<div id="wowslider-container1">
+			<div class="ws_images"><ul>
+					<li><img src="data1/images/chrysanthemum.jpg" /></li>
+					<li><img src="data1/images/desert.jpg" /></li>
+					<li><img src="data1/images/hydrangeas.jpg" /></li>
+					<li><img src="data1/images/jellyfish.jpg" /></li>
+					<li><img src="data1/images/koala.jpg" /></li>
+				</ul></div>
+				<div class="ws_script" style="position:absolute;left:-99%"></div>
+			<div class="ws_shadow"></div>
+			</div>	
+			<script type="text/javascript" src="engine1/wowslider.js"></script>
+			<script type="text/javascript" src="engine1/script.js"></script>
+			<!-- End WOWSlider.com BODY section -->
+			</div>
+			<div class="w3-row " style="margin:12px" >
+				<div class="w3-col s1  w3-center ">
+					<p>
+					</p>
+				</div>
+				<div class="w3-col s10  w3-center ">
+					<a href="#daste" ><img src="images/se-job.png" style="width:100%"></a>
+				</div>
+				<div class="w3-col s1  w3-center ">
+					<p>
+					</p>
+				</div>
+			</div>
+			<div class="w3-row " style="margin:12px">
+				<div class="w3-col s6  w3-center ">
+					<a href="#niaz" ><img src="images/niaz.png" style="width:97%"></a>
+				</div>
+				<div class="w3-col s6  w3-center ">
+					<a href="#takhf" ><img src="images/off.png" style="width:97%"></a>
+				</div>
+			</div>		
+			<div class="w3-row " style="margin:12px">
+				<div class="w3-col s6  w3-center">
+					<span onclick="loadnews()"><img src="images/News.png" style="width:97%"></span>
+				</div>
+				<div class="w3-col s6  w3-center">
+					<a href="#kasb"><img src="images/daramad.png" style="width:97%"></a>
+				</div>
+			</div>			
+		</div>
+	</div>	  
+	<div data-role="page" id="daste"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel2" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel2" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span></div>
+		</div>
+		<div data-role="main" class="ui-content">
+			<div class="ui-grid-a" style="margin-bottom:45px;">
+				<div class="ui-block-a">
+					<a href="#myPopupDialog" data-rel="popup" class="ui-btn ui-btn-b"  style="font-size:12px;">جستجوی پیشرفته</a>
+				</div>
+				<div class="ui-block-b">
+					<a href="#map"  class="ui-btn ui-btn-b" style="font-size:12px;">جستجوی روی نقشه</a>
+				</div>
+			</div>
+			<div data-role="popup" id="myPopupDialog" data-position-to="window">
+				<div data-role="main" class="ui-content">
+					<div id="search_job">
+						<div class="daste_job_search">
+							<!--<select name="day" id="day">
+								<option value="mon">Monday</option>
+								<option value="tue">Tuesday</option>
+								<option value="wed">Wednesday</option>
+							</select>-->
+						</div>
+						<input type="text" name="fname" id="onvan" placeholder="عنوان فروشگاه">
+						<input type="text" name="fname" id="modir" placeholder="مدیریت">
+						<input type="text" name="fname" id="khadamat" placeholder="خدمات">
+						<input type="text" name="fname" id="tel" placeholder="تلفن">
+						<input type="text" name="fname" id="adres" placeholder="ادرس"> 
+						<input type="button" value="جستجو" onclick="searchper();">
+					</div>
+				</div>		
+			</div>
+			<!--dasteha-->
+			
+			<script>
+function modall(src)
+{
+	document.getElementById('modal01').style.display='block';
+	document.getElementById('modal-img').src=src;
+	
+}
+</script>
+			<div style="margin-bottom:30px;" class="w3-row w3-center" id="list_dasteha">
+			
+
+			</div>
+		</div>
+	</div>
+	<div data-role="page" id="map">  
+	<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel3" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel3" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+				<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+			</div>
+		</div>
+		<!--mapsearch-->
+		<div data-role="main" class="ui-content">
+			<div id="seamap">
+				<!--<select data-theme="b" class="w3-text-white" name="day" id="day">
+					<option value="mon">Monday</option>
+					<option value="tue">Tuesday</option>
+					<option value="wed">Wednesday</option>
+				</select>-->
+				</div>
+				<script>
+				function addrmapf(adres)
+				{
+					var addrmap=adres.toString();
+					addrmap=addrmap.replace('http://avayemashaghel.ir/','');
+					if(addrmap.indexOf("map.php")==-1)
+					{
+						show_job(addrmap);
+						document.getElementById("mapsea").src="http://avayemashaghel.ir/map.php";
+					}
+					//alert(addrmap);
+				}
+				//alert((this.contentWindow.location).replace('http://avayemashaghel.ir/',''));
+				
+				</script>
+			<iframe src="http://avayemashaghel.ir/map.php" style="border:none" width="100%" height="420px" id="mapsea" onLoad="addrmapf(this.contentWindow.location);"></iframe>
+		</div>	
+	</div>	
+	
+	
+	
+	
+	
+	
+	<div data-role="page" id="khoroj"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel7" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel7" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="main" >
+			<div class="w3-card-12" style="width:100%;margin-bottom:35px; height:500px; direction:rtl;" >
+			<br><br>
+				<p style="font-size:18;">آیا قصد خروج از برنامه را دارید ؟</p>
+				<br><br>
+				<div style="text-align:center;">
+				<div class="ui-block-b" style="width:50%;">
+					<span class="ui-btn ui-btn-b" style="font-size:18px;" onclick="navigator.app.exitApp();">بله</span>
+				</div>
+				<div class="ui-block-b" style="width:50%;">
+					<span class="ui-btn ui-btn-b" style="font-size:18px;" onclick="location.replace('#main');">خیر</span>
+				</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div data-role="page" id="send-prog">  
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel18" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel18" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="content">
+			<div id="map-canvas" style="width:100%; height:500px; direction:rtl;">
+			<a href="https://telegram.me/share/url?url=http://avayemashaghel.ir/app.apk&text=دانلود نرم افزار تلگرام آوای مشاغل" id="telegram_share" class="mobileShare" title="inviteFriends" alt="telegram_share">
+			<b>اشتراک برای دوستان در تلگرام</b>
+			</a>
+			<br>
+			<br>
+			<a href="whatsapp://send?text=دانلود نرم افزار آوای مشاغل http://www.avayemashaghel.ir/app.apk" id="telegram_share" class="mobileShare" title="inviteFriends" alt="telegram_share">
+			<b>اشتراک برای دوستان در واتس آپ</b>
+			</a>
+			</div>
+		</div> 
+	</div>
+	
+	
+	<div data-role="page" id="natije">  
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel19" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel19" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="content">
+			<div id="map-canvas" style="width:100%; height:500px;"></div>
+		</div> 
+	</div> 	
+	
+	
+	<div data-role="page" id="abute">  
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel20" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel20" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="content">
+			<div id="map-canvas" style="width:100%; height:500px;"></div>
+		</div> 
+	</div>
+	
+	<div data-role="page" id="abuteus">  
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel21" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel21" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="content">
+			<div id="map-canvas" style="width:100%; height:500px;"></div>
+		</div> 
+	</div>
+
+
+	<div data-role="page" id="kasb">  
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel22" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel22" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="content">
+			<div id="emtiaz"></div>
+			<script>
+				function loadgame(){
+				ajaxco("http://avayemashaghel.ir/gameimg.php?user="+localStorage.user,"gameimg");
+				ajaxco("http://avayemashaghel.ir/gameetebar.php?user="+localStorage.user,"etebar");
+				}
+				loadgame();
+				function getcoin(){
+				ajaxco("http://avayemashaghel.ir/getcoin.php?user="+localStorage.user,"resgc");
+				loadgame();
+				loademtiaz();
+				}
+				function loademtiaz(){
+					ajaxco("http://avayemashaghel.ir/emtiaz.php?user="+localStorage.user,"emtiaz")
+				}
+				loademtiaz();
+			</script>
+			<div class="w3-card-12" style="width:100%;margin-bottom:35px;margin-top:15px;" id="gameimg">
+				<!--<img src="img_fjords.jpg" alt="Norway" style="width:100%">-->
+			</div>
+			<div id="etebar" style="direction:rtl;text-align:right;"></div>
+			<div id="resgc" style="direction:rtl;text-align:right;"></div>
+				<span  class="ui-btn ui-btn-b" onclick="getcoin()">دریافت اعتبار این شغل</span>
+		</div> 
+	</div> 
+
+	
+	<div data-role="page" id="shogl"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel4" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel4" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div>
+		<input id="fjobs" data-type="search"><span  class="ui-btn ui-btn-b" onclick="fjobsfunction(document.getElementById('fjobs').value)">جستجو</span>
+		</div>
+		<div data-role="main" class="ui-content" style="direction:ltr;" id="list_job">
+					
+		</div>
+	</div>	
+	<div data-role="page" id="mor-shogl"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel5" data-position="right" data-position-fixed="true" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel5" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+								<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+								<a style="background-color:#33ccff;float:left;margin-left:5px;margin-top:12px;" href="#" class="ui-btn-inline  " ><span  class="fa fa-heart w3-xlarge " id="lovee" style="color:white;" onclick="addlov()"></span></a>
+				<a style="background-color:#33ccff;float:left;margin-left:5px;margin-top:4px;" href="#" class="ui-btn-inline  " ><span  class="fa fa-share-alt-square w3-xxlarge w3-text-white"></span></a>
+			</div>
+		</div>
+		<!--jobinfo-->
+		<div data-role="main"  id="jobinfo">
+			
+
+<!--ta inja-->
+		</div>
+	</div>	
+	<div data-role="page" id="niaz"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel6" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel6" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="main" class="ui-content">
+			<div class="ui-grid-a">
+				<div class="ui-block-a">
+					<span data-rel="popup" class="ui-btn ui-btn-b" onclick="niazmandi();">نیازمندی</span>
+				</div>
+				<div class="ui-block-b">
+					<span  class="ui-btn ui-btn-b" onclick="niazmandam()">نیازمندم</span>
+				</div>
+			</div>
+				<input id="myFilter" data-type="search"><span  class="ui-btn ui-btn-b" onclick="findniaz(document.getElementById('myFilter').value)">جستجو</span>
+			<div id="niazha">
+			<!--<ul class="w3-ul w3-card-4 " style="direction:rtl;" >
+				<a href="#mor-shogl">  
+					<li  style="padding-bottom:10px;">
+						<img src="img_avatar2.png" class="w3-left w3-circle" style="width:50px">
+						<span class="w3-large">عنوان نیاز</span><br>
+						<span class="w3-small">توضیحات نیاز</span>
+					</li>
+				</a>
+			</ul>-->
+			</div>
+		</div>
+	</div>	
+	<div data-role="page" id="mor-niaz"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel7" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel7" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="main" class="ui-content">
+			<div class="w3-card-12" style="width:100%;margin-bottom:35px;" id="singleniaz">
+				<!--<img src="img_fjords.jpg" alt="Norway" style="width:100%">
+				<div class="ui-content w3-gray" style="direction:rtl;">
+					<h1>Welcome To My Homepage</h1>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>-->
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<div data-role="page" id="takhf"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel8" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel8" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="main" class="ui-content">
+			<div class="ui-grid-a">
+				<div class="ui-block-a">
+					<span class="ui-btn ui-btn-b" onclick="takhfif()">تخفیف ها</span>
+				</div>
+				<div class="ui-block-b">
+					<span class="ui-btn ui-btn-b" onclick="aghsat()">فروش اقساطی</span>
+				</div>
+					
+				</div>
+		</div>
+	</div>	
+	<div data-role="page" id="list-takhf"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel9" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel9" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span></div>
+		</div>
+		<input id="fjobss" data-type="search"><span  class="ui-btn ui-btn-b" onclick="findpersent(document.getElementById('fjobss').value)">جستجو</span>
+		
+		<div data-role="main" class="ui-content" style="direction:rtl;" id="takhfifaghsat">
+			<!--<ul class="w3-ul w3-card-4 " >
+				<a href="#mor-takhf">  
+					<li  style="padding-bottom:10px;">
+						<img src="img_avatar2.png" class="w3-left w3-circle" style="width:50px">
+						<span class="w3-large">عنوان تخفیف</span><br>
+						<span class="w3-small">توضیحات تخفیف</span>
+					</li>
+				</a>
+			</ul>		-->
+		</div>	
+	</div>
+	<div data-role="page" id="mor-takhf"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel10" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel10" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span></div>
+		</div>
+		<div data-role="main" class="ui-content">
+			<div class="w3-card-12" style="width:100%;margin-bottom:35px;">
+				<img src="img_fjords.jpg" alt="Norway" style="width:100%">
+				<div class="ui-content w3-gray" style="direction:rtl;">
+					<h1>Welcome To My Homepage</h1>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<div data-role="page" id="masage"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel11" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel11" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="main" class="ui-content" id="msgpl">
+			
+			  
+		</div>	
+	</div>
+	<div data-role="page" id="mor-masage"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel12" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel12" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span></div>
+		</div>
+		<div data-role="main" class="ui-content">
+			<div class="w3-card-12" style="width:100%;margin-bottom:35px;">
+				<div class="ui-content w3-gray" style="direction:rtl;">
+					<h1>Welcome To My Homepage</h1>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+				</div>
+			</div>
+			
+		</div>
+	</div> 
+	<div data-role="page" id="news"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel13" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel13" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="main" class="ui-content" >
+			<div data-role="collapsibleset" id="newlist">
+				<!--<div data-role="collapsible" data-collapsed-icon="false" data-expanded-icon="false" style="margin-bottom:5px;" >
+		        	<h1>عنوان خبر</h1>
+					<p style="text-align:right;"><a href="#mor-news" >خلاصه خبر</a></p>
+		    	</div>-->
+			</div>
+		</div>	
+	</div>
+	<div data-role="page" id="mor-news"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel14" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel14" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="main" class="ui-content">
+			<div class="w3-card-12" style="width:100%;margin-bottom:35px;">
+				<img src="img_fjords.jpg" alt="Norway" style="width:100%">
+				<div class="ui-content w3-gray" style="direction:rtl;">
+					<h1>Welcome To My Homepage</h1>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+					</br>
+					<p>aaaaaaaaaaaaaaaa</p>
+				</div>
+			</div>
+			
+		</div>
+	</div> 	  
+	<div data-role="page" id="fave"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel15" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel15" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="main" class="ui-content" style="direction:rtl;" id="favelist">
+					
+		</div>
+	</div> 	  
+ 	  
+	<div data-role="page" id="add-job"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel17" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel17" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="main" class="ui-content" style="direction:rtl;text-align:right;">
+				<input style="direction:rtl;text-align:right;" type="text" name="fname" id="onvanreg" placeholder="نام / عنوان شغل">
+				<input style="direction:rtl;text-align:right;" type="text" name="fname" id="adresreg" placeholder="تلفن">
+				<input style="direction:rtl;text-align:right;" type="text" name="fname" id="tel1reg" placeholder="ادرس"> 
+				</br>
+				<div class="ui-block">
+					<span class="ui-btn ui-btn-b" onclick="addjob()">ارسال</span>
+				</div>
+				<div class="ui-block" style="display:none;" id="btnsms">
+					<a href="sms:5000500031129?body=body text here" id="sendsmsjob"><span class="ui-btn ui-btn-b" >ارسال بدون اینترنت</span></a>
+				</div>
+			<div id="resregjob"></div>
+		</div>
+	</div>	
+	
+	<div data-role="page" id="add-member"> 
+		<div style="background-color:#fff;margin:0px;padding:0px;" data-role="panel" id="mypanel17" data-position="right" data-display="overlay" data-position-fixed="true"  data-theme="a">
+			<div style="margin:0px;padding:0px;" data-role="main"  >
+				<img src="images/top-panel.jpg" alt="Norway" style="width:100%;margin:none;padding:none;">
+				<ul class="w3-ul">
+				  <li><img src="images/city.png" alt="Norway" style="width:100%;"><p style="margin-top:-20px;margin-left:55px">بیرجند</p></li>
+				  <li><a href="#add-job"><img src="images/sabt-shogl.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#add-member"><img src="images/sabtkarbar.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#fave"><img src="images/faveha.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/updat.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#send-prog"><img src="images/sendf.png" alt="Norway" style="width:100%;"></a></li>
+				  <!-- <li><img src="images/data.png" alt="Norway" style="width:100%;"></li> -->
+				  <li><a href="#natije"><img src="images/natije.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abute"><img src="images/abute.png" alt="Norway" style="width:100%;"></a></li>
+				  <li><a href="#abuteus"><img src="images/abuteus.png" alt="Norway" style="width:100%;"></a></li>
+
+				</ul>
+		
+			</div>
+			
+		</div>
+		<div data-role="header" style="text-align:right;background-color:#33ccff;color:white;height:45px;">
+			<div class="w3-vivid-red w3-content " >
+				<a style="margin-top:10px;background-color:#33ccff;margin-right:20px;" href="#mypanel17" data-rel="popup" data-position-to="window" class="ui-btn-inline " ><span  class="fa fa-bars w3-xlarge "></span></a>
+							<span onclick="loadmsg()" style="background-color:#33ccff;float:left;margin-left:18px;margin-top:2px;" class="ui-btn-inline  " ><span  class="fa fa-envelope w3-xxlarge "><span style="margin-left:-20px;" class="w3-badge w3-red w3-large" >6</span></span></span>
+							</div>
+		</div>
+		<div data-role="main" class="ui-content" style="direction:rtl;text-align:right;">
+
+				<script>
+					function addmember()
+					{
+						mobilemem= document.getElementById("mobilemem").value;
+						passwordmem=document.getElementById("passwordmem").value;
+						moarefmem=document.getElementById("moarefmem").value;
+						addresmem="http://avayemashaghel.ir/addmember.php?mob="+mobilemem+"&pass="+passwordmem+"&moaref="+moarefmem;
+						//alert(addresmem);
+						ajaxco(addresmem,"resregmem");
+					}
+					function okkod(){
+						regkod=document.getElementById("regkod").value;
+						ajaxco("http://avayemashaghel.ir/addmember.php?regkod="+regkod,"resregkod");
+					}
+					function loginmember(){
+						moblogin=document.getElementById("moblogin").value;
+						passlogin=document.getElementById("passlogin").value;
+						localStorage.user=moblogin;
+						ajaxco("http://avayemashaghel.ir/loginmember.php?user="+moblogin+"&pass="+passlogin,"reslogin");
+						if(localStorage.user!="")
+						{
+							document.getElementById("loginplc").style.display = "none";
+							document.getElementById("aflog").style.display="";
+							document.getElementById("beflog").style.display="none";
+						}
+						
+					}
+				</script>
+				<div id="beflog">
+				<input style="direction:rtl;text-align:right;" type="text" name="mobile" id="mobilemem" placeholder="شماره موبایل">
+				<input style="direction:rtl;text-align:right;" type="password" name="password" id="passwordmem" placeholder="کلمه عبور"> 
+				<input style="direction:rtl;text-align:right;" type="text" name="moaref" id="moarefmem" placeholder="معرف">
+				</br>
+				<div class="ui-block">
+					<span class="ui-btn ui-btn-b" onclick="addmember()">ارسال</span>
+				</div>
+				<div id="resregmem"></div><hr><br>
+				<input style="direction:rtl;text-align:right;" type="text" name="moaref" id="regkod" placeholder="کد فعال سازی">
+				<br>
+				<div class="ui-block">
+					<span class="ui-btn ui-btn-b" onclick="okkod()">فعال سازی نام کاربری شما</span>
+				</div>
+				<div id="resregkod"></div><hr><br>
+				
+				<div id="loginplc">
+				<input style="direction:rtl;text-align:right;" type="text" name="moaref" id="moblogin" placeholder="شماره موبایل">
+				<input style="direction:rtl;text-align:right;" type="text" name="moaref" id="passlogin" placeholder="کلمه عبور">
+				<br>
+				<div class="ui-block">
+					<span class="ui-btn ui-btn-b" onclick="loginmember()">ورود</span>
+				</div>
+				<div id="reslogin"></div></div>
+				</div>
+				
+				<div id="aflog" style="display:none;">
+				<input style="direction:rtl;text-align:right;" type="text" name="moaref" id="nam" placeholder="نام">
+				<input style="direction:rtl;text-align:right;" type="text" name="moaref" id="famil" placeholder="نام خانوادگی">
+				<input style="direction:rtl;text-align:right;" type="text" name="moaref" id="sal" placeholder="سال تولد">
+				<input style="direction:rtl;text-align:right;" type="text" name="moaref" id="mah" placeholder="ماه تولد">
+				<input style="direction:rtl;text-align:right;" type="text" name="moaref" id="roz" placeholder="روز تولد">
+				<div class="ui-block" >
+					<span class="ui-btn ui-btn-b" onclick="edituser()">ویرایش</span>
+				</div>
+				<div id="resedituser"></div>
+				<hr>
+				<div class="ui-block" >
+					<span class="ui-btn ui-btn-b" onclick="exituser()">خروج</span>
+				</div>
+				</div>
+
+		</div>
+	</div>	
+	
+    
+    <script type="text/javascript">
+        app.initialize();
+		
+				/*document.addEventListener("backbutton", function(e){
+					$("[data-role=panel]").panel("close");	alert('22');
+				}, false);*/
+				
+				
+				/*document.addEventListener("backbutton", function(e){
+					if($.mobile.activePage.is('#main')){
+						alert('navigator.app.exitApp();');
+					}
+					else {
+						alert('navigator.app.backHistory()');
+					}
+				}, true);*/
+				
+	
+    </script>
+<script>
+function edituser()
+{
+	nam=document.getElementById("nam").value;
+	famil=document.getElementById("famil").value;
+	sal=document.getElementById("sal").value;
+	mah=document.getElementById("mah").value;
+	roz=document.getElementById("roz").value;
+	us=localStorage.user;
+	adedit="http://avayemashaghel.ir/editu.php?us="+us+"&nam="+nam+"&famil="+famil+"&sal="+sal+"&mah="+mah+"&roz="+roz;
+	ajaxco(adedit,"resedituser");
+}
+
+
+if(localStorage.first!="ok")
+{
+	localStorage.user="";
+	localStorage.first="ok";
+	if(localStorage.user!="")
+	{
+		document.getElementById("beflog").style.display="none";
+		document.getElementById("aflog").style.display="";
+	}
+	else
+	{
+		document.getElementById("beflog").style.display="";
+		document.getElementById("aflog").style.display="none";
+	}
+	
+}
+else
+{
+	if(localStorage.user!="")
+	{
+		document.getElementById("beflog").style.display="none";
+		document.getElementById("aflog").style.display="";
+	}
+	else
+	{
+		document.getElementById("beflog").style.display="";
+		document.getElementById("aflog").style.display="none";
+	}
+}
+
+function exituser()
+{
+	localStorage.user="";
+	document.getElementById("aflog").style.display="none";
+	document.getElementById("beflog").style.display="";
+	document.getElementById("loginplc").style.display = "";
+}
+</script>
+</body>
+</html>

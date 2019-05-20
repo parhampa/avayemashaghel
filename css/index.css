@@ -1,0 +1,355 @@
+/* Style the Image Used to Trigger the Modal */
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content, #caption { 
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}
+
+@font-face {
+font-family : 'b yekan';
+src : url(../fonts/Yekan.eot);
+src : url(../fonts/Yekan.eot?#iefix) format("embedded-opentype"), url(../fonts/Yekan.woff) format("woff"), url(../fonts/Yekan.ttf) format("truetype"), url(../fonts/Yekan.svg#BYekan) format("svg");
+font-weight : normal;
+font-style : normal;
+}
+
+a{
+
+    color:#000000;
+    text-decoration:none;
+}
+.listItemNoIcon .ui-icon
+{
+
+ display: none;
+
+}
+
+
+.ui-listview > .ui-li-static,
+.ui-listview > .ui-li-divider,
+.ui-listview > li > a.ui-btn {
+	margin: 0;
+	display: block;
+	position: relative;
+	text-align: right;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+
+a:link{
+
+    color:#000000;
+    text-decoration:none;
+}
+
+a:visited{
+    color:#000000;
+	 text-decoration:none;
+}
+
+
+
+a:active{
+	color:#000000;
+ text-decoration:none;
+}
+
+
+
+*,a:link,label{
+	font-family:'b yekan';text-shadow:none;box-shadow:none;color:#000000;
+	 text-decoration:none;
+}
+label {
+		color:white;
+}
+.main-btn {
+	color:white;font-family:'b yekan';text-shadow:none;
+}
+.collapsibleset{
+	text-align:right;
+}
+
+.ui-collapsible .ui-collapsible-heading-toggle {
+    text-align: right;
+    padding-left: 2.5em;
+    padding-right: 2.5em;
+}
+
+hr{
+	display: block;height: 1px;border: 0;border-top: 1px solid #ccc;margin: 1em 0;padding: 0; 
+}
+
+#map-page, #map-canvas { width: 100%; height: 100%; padding: 0; }
+
+
+.header{
+	text-align:right;background-color:#b30606;color:white;padding:16px 0 16px 0;
+}
+.footer{
+	text-align:center;background-color:#b30606;color:white;
+}
+.header div:nth-child(1) {
+	margin-right:16px;
+}
+/*.back-btn{
+	margin-top:5px;background-color:#2b667c;border-color:white;color:white;font-family:'b yekan';text-shadow:none;
+}*/
+.top-margin{
+	margin-top:-15px;
+}
+.small-font{
+	font-size:11px;
+}
+.right{
+	text-align:right;
+}
+.white
+{
+	color:white;
+}
+.center-align{
+	text-align:center;
+}
+.reach-box{
+	background-color:white;overflow:auto;height:500px;word-wrap: break-word;
+}	
+.background-color{
+	background-color:#ffffff;
+}
+.silver-background{
+	background-color:#f4f4f4;
+}
+.padding-title{
+	padding:5px;
+}
+.margin-title{
+	padding:5px;
+}
+.backbtn{
+	position:absolute;
+	top:8px;
+	background-color:#b30606;
+	border-color:white;
+	color:white;
+	font-family:'b yekan';
+	text-shadow:none;
+}
+.btn{
+	background-color:#b30606;border-color:white;color:white;font-family:'b yekan';text-shadow:none;
+}
+.bg-color
+{
+	background-color:black;
+}
+#loader-img{
+	width:40px;height:40px; margin-top:100px;
+}
+#logo{
+	padding-top:20%;
+}
+#div-logo-main{
+	position:absolute;top:14px;left:14px;z-index:999;background-color:black;opacity:0.4;
+}
+#img-logo-main{
+	position:absolute;top:14px;left:14px;z-index:999;background-color:black;opacity:0.4;
+}
+/*=====================================================================================*/
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 
+}
+
+body {
+    -webkit-touch-callout: none;                 prevent callout to copy image, etc when tap to hold 
+    -webkit-text-size-adjust: none;             prevent webkit from resizing text to fit 
+    -webkit-user-select: none;                   prevent copy paste, to allow, change 'none' to 'text' 
+    background-color:#E4E4E4;
+    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #A7A7A7),
+        color-stop(0.51, #E4E4E4)
+    );
+    background-attachment:fixed;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size:12px;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    text-transform:uppercase;
+    width:100%;
+}
+ */
+/* Portrait layout (default) */
+.app {
+    background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
+    position:absolute;             /* position in the center of the screen */
+    left:50%;
+    top:50%;
+    height:50px;                   /* text area height */
+    width:225px;                   /* text area width */
+    text-align:center;
+    padding:180px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
+    margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
+                                   /* offset horizontal: half of text area width */
+}
+
+/* Landscape layout (with min-width) */
+@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
+    .app {
+        background-position:left center;
+        padding:75px 0px 75px 170px;  /* padding-top + padding-bottom + text area = image height */
+        margin:-90px 0px 0px -198px;  /* offset vertical: half of image height */
+                                      /* offset horizontal: half of image width and text area width */
+    }
+}
+
+h1 {
+    font-size:24px;
+    font-weight:normal;
+    margin:0px;
+    overflow:visible;
+    padding:0px;
+    text-align:center;
+}
+
+.event {
+    border-radius:4px;
+    -webkit-border-radius:4px;
+    color:#FFFFFF;
+    font-size:12px;
+    margin:0px 30px;
+    padding:2px 0px;
+}
+
+.event.listening {
+    background-color:#333333;
+    display:block;
+}
+
+.event.received {
+    background-color:#4B946A;
+    display:none;
+}
+
+@keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+ 
+@-webkit-keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+ 
+.blink {
+    animation:fade 3000ms infinite;
+    -webkit-animation:fade 3000ms infinite;
+}
